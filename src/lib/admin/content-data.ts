@@ -4,6 +4,8 @@ import type { Session } from './session';
 import { contentModel } from './content-model';
 import { type WPRecord, rawTitle } from './records';
 import { normalizeSite } from '../content/normalize';
+import { fieldBoolean } from '../wordpress/fields';
+import { sections } from '../wordpress/adapters';
 import type { Taxonomy, Media } from '../content/types';
 export async function allRecords(
   kind: string,
@@ -108,7 +110,18 @@ export async function managedData(
   const records = model.single
     ? pages.filter((p) => p.slug === model.slug)
     : model.parent
-      ? pages.filter((p) => parent && p.parent === parent.id)
+      ? pages.filter(
+          (p) =>
+            parent &&
+            p.parent === parent.id &&
+            (area === 'funding'
+              ? fieldBoolean(sections(p.content?.raw || '')['managed funder'])
+              : area === 'research'
+                ? !fieldBoolean(
+                    sections(p.content?.raw || '')['managed funder'],
+                  )
+                : true),
+        )
       : posts.filter((p) => category && p.categories?.includes(category.id));
   return {
     model,

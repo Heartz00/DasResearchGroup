@@ -14,6 +14,7 @@ const groups = [
       ['Publications', '/admin/manage/publications'],
       ['Group News', '/admin/manage/updates'],
       ['Instruments', '/admin/manage/facilities'],
+      ['Funding Support', '/admin/manage/funding'],
       ['Gallery', '/admin/manage/photos'],
       ['Join the Lab', '/admin/manage/join'],
       ['Teaching', '/admin/manage/teaching'],

@@ -59,6 +59,13 @@ export default async function ManagePage({
       : undefined;
   let record: WPRecord | undefined = existing || fallback;
   let values = contentValues(area, record?.content?.raw || '');
+  if (area === 'funding') {
+    if (!values['Display on Website']) values['Display on Website'] = 'Yes';
+    if (!record && query.item === 'new')
+      values['Display Order'] = String(
+        Math.max(-1, ...data.site.funding.funders.map((p) => p.order)) + 1,
+      );
+  }
   if (model.single) {
     const saved = sections(record?.content?.raw || '');
     for (const [label, value] of Object.entries(
@@ -180,6 +187,14 @@ export default async function ManagePage({
             m.source_url === image.url ||
             m.media_details?.sizes?.large?.source_url === image.url,
         )?.id || 0;
+    } else if (area === 'funding') {
+      const funder = data.site.funding.funders.find((p) => p.id === query.item);
+      if (!funder) notFound();
+      title = funder.name;
+      sourceKey = funder.sourceKey;
+      values['Award Number'] = funder.award;
+      values['Display on Website'] = funder.active ? 'Yes' : 'No';
+      values['Display Order'] = String(funder.order);
     } else if (area === 'updates') {
       const n = data.site.news.find((n) => n.id === query.item);
       if (!n) notFound();
@@ -246,6 +261,24 @@ export default async function ManagePage({
           name: p.name || 'Member profile — name needed',
           detail: p.alumni ? 'Alumni' : p.role,
           image: p.photo?.url,
+        })),
+    );
+  if (area === 'funding')
+    cards.push(
+      ...data.site.funding.funders
+        .filter(
+          (p) =>
+            p.id.startsWith('legacy-') &&
+            !data.records.some(
+              (r) =>
+                text(sections(r.content?.raw || '')['funding key'] || '') ===
+                p.sourceKey,
+            ),
+        )
+        .map((p) => ({
+          id: p.id,
+          name: p.name,
+          detail: p.award ? `Award ${p.award}` : 'Existing funding support',
         })),
     );
   if (area === 'publications')

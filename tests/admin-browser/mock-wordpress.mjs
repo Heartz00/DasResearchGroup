@@ -8,7 +8,14 @@ let native = false,
   managed = [],
   nextId = 700;
 const nativePages = () => [
-  record(),
+  {
+    ...record(),
+    content: {
+      raw:
+        record().content.raw +
+        '<p>Current Funding Support</p><img src="https://people.smu.edu/daslab/files/2025/08/website-grants.jpg" width="1280" height="720">',
+    },
+  },
   {
     id: 308,
     slug: 'instruments-2',

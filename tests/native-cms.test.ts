@@ -81,6 +81,67 @@ const source = (pages: CmsPage[]): SiteContent => ({
   mode: 'live',
 });
 
+test('funding preserves all original funders, replaces one saved entry and honors hiding', () => {
+  const data = source([
+    record(
+      6,
+      'research',
+      '<p>Current Funding Support</p><img src="https://people.smu.edu/daslab/files/2025/08/website-grants.jpg" width="1280" height="720">',
+    ),
+  ]);
+  const initial = normalizeSite(data);
+  assert.equal(initial.funding.funders.length, 6);
+  assert.equal(initial.funding.funders[0].award, '2316991');
+  assert.equal(
+    initial.funding.funders.find((p) => p.sourceKey === 'doe')?.award,
+    'DE-SC0025724',
+  );
+  assert.ok(initial.funding.graphic);
+  data.pages.push(
+    record(
+      902,
+      'updated-nsf',
+      updateContentFields(
+        'funding',
+        '',
+        {
+          'Award Number': 'Approved award',
+          'Display on Website': 'No',
+          'Funder Website': 'https://www.nsf.gov/',
+        },
+        { 'Managed Funder': 'Yes', 'Funding Key': 'nsf' },
+      ),
+      6,
+    ),
+  );
+  const saved = normalizeSite(data);
+  assert.equal(saved.funding.funders.length, 6);
+  assert.equal(
+    saved.funding.funders.find((p) => p.sourceKey === 'nsf')?.active,
+    false,
+  );
+  assert.equal(
+    saved.funding.funders.find((p) => p.sourceKey === 'nsf')?.award,
+    'Approved award',
+  );
+  assert.equal(saved.funding.graphic, undefined);
+  assert.equal(saved.areas.length, 0);
+  data.pages.push(
+    record(
+      903,
+      'new-funder',
+      updateContentFields(
+        'funding',
+        '',
+        { 'Display on Website': 'Yes' },
+        { 'Managed Funder': 'Yes' },
+      ),
+      6,
+    ),
+  );
+  assert.equal(normalizeSite(data).funding.funders.length, 7);
+});
+
 test('group-news fields and photo captions round-trip from admin to public content', () => {
   const data = source([]);
   data.categories = [{ id: 3, slug: 'news', name: 'News' }];

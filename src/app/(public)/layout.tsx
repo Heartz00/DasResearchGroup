@@ -73,6 +73,9 @@ export default async function PublicLayout({
           <div>
             <p className="eyebrow">Explore</p>
             <Link href="/research">Research</Link>
+            {site.funding.funders.some((p) => p.active) && (
+              <Link href="/#funding-support">Funding Support</Link>
+            )}
             <Link href="/people">Team</Link>
             <Link href="/publications">Publications</Link>
             <Link href="/news">Group News</Link>

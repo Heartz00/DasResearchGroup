@@ -1,3 +1,4 @@
+import FundingSupport from '@/components/funding-support';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -512,6 +513,7 @@ export default async function ContentPage({
             <Empty source="https://people.smu.edu/daslab/teaching/" />
           ))}
       </div>
+      {section === 'research' && <FundingSupport funding={site.funding} />}
     </main>
   );
 }

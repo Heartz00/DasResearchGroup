@@ -1,5 +1,6 @@
 import { load } from 'cheerio';
 import { pageHeaders } from './page-headers';
+import { fundingSupport } from './funding';
 import {
   profileKey,
   publicationKey,
@@ -375,7 +376,9 @@ export function normalizeSite(source: SiteContent) {
       }),
   ].filter((p, i, all) => all.findIndex((other) => other.url === p.url) === i);
   const researchSections = sections(research?.html ?? '');
-  const researchChildren = children(research);
+  const researchChildren = children(research).filter(
+    (p) => !fieldBoolean(sections(p.html)['managed funder']),
+  );
   const footer = page('frontend-footer');
   const footerSections = sections(footer?.html ?? '');
   const contact = page('frontend-contact');
@@ -440,6 +443,7 @@ export function normalizeSite(source: SiteContent) {
   return {
     ...source,
     pageHeaders: pageHeaders(source),
+    funding: fundingSupport(research, source.pages, source.media),
     page,
     roster,
     featuredPeople: roster.filter((p) => !p.alumni && p.featured),

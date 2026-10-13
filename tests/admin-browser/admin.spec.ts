@@ -266,6 +266,7 @@ test('task dashboard and named navigation support a simple mobile editing flow',
         'Publications',
         'Group News',
         'Instruments',
+        'Funding Support',
         'Gallery',
         'Join the Lab',
         'Teaching',
@@ -279,7 +280,7 @@ test('task dashboard and named navigation support a simple mobile editing flow',
     await expect(group).toBeVisible();
     await expect(group.getByRole('link')).toHaveText([...labels]);
   }
-  await expect(sidebar.getByRole('link')).toHaveCount(16);
+  await expect(sidebar.getByRole('link')).toHaveCount(17);
   await expect(
     sidebar.getByRole('link', { name: 'Homepage', exact: true }),
   ).toHaveAttribute('href', '/admin/manage/homepage');
@@ -648,4 +649,61 @@ test('page headers support media selection and upload through the normal WordPre
     expect(record.data.status).toBe('publish');
     expect(record.data.content).toContain(`Approved ${section}`);
   }
+});
+
+test('funding support prepopulates original funders and publishes a logo without creating a research area', async ({
+  page,
+  request,
+}) => {
+  await request.get('http://127.0.0.1:3019/__test/native');
+  await signIn(page);
+  await page.goto('/admin/manage/funding');
+  await expect(page.locator('.managed-item')).toHaveCount(6);
+  await page.goto('/admin/manage/funding?item=legacy-0');
+  await expect(page.getByLabel('Funder name', { exact: true })).toHaveValue(
+    'National Science Foundation',
+  );
+  await expect(page.getByLabel('Award Number', { exact: true })).toHaveValue(
+    '2316991',
+  );
+  await page
+    .getByLabel('Award Number', { exact: true })
+    .fill('Approved replacement');
+  await page
+    .getByLabel('Display on Website', { exact: true })
+    .selectOption('Yes');
+  await page.getByLabel('Visibility', { exact: true }).selectOption('publish');
+  await page.getByLabel('Upload a photo', { exact: true }).setInputFiles({
+    name: 'logo.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j2wAAAABJRU5ErkJggg==',
+      'base64',
+    ),
+  });
+  await page
+    .getByLabel('Describe the new photo', { exact: true })
+    .fill('Approved funding logo');
+  await page.getByRole('button', { name: 'Save changes', exact: true }).click();
+  await expect(page.locator('main').getByRole('status')).toContainText(
+    'Changes saved',
+  );
+  const state = await (
+    await request.get('http://127.0.0.1:3019/__test/state')
+  ).json();
+  const saved = state.writes.find(
+    (w: { data: { title?: string } }) =>
+      w.data.title === 'National Science Foundation',
+  );
+  expect(saved.data.parent).toBe(6);
+  expect(saved.data.content).toContain('Managed Funder');
+  expect(saved.data.content).toContain('Funding Key');
+  expect(saved.data.content).toContain('Approved replacement');
+  expect(saved.data.featured_media).toBeGreaterThan(0);
+  await page.goto('/admin/manage/funding');
+  await expect(page.locator('.managed-item')).toHaveCount(6);
+  await page.goto('/admin/manage/research');
+  await expect(page.locator('main')).not.toContainText(
+    'National Science Foundation',
+  );
 });

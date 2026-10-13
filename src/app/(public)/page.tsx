@@ -1,3 +1,4 @@
+import FundingSupport from '@/components/funding-support';
 import Link from 'next/link';
 import { getSite } from '@/lib/content';
 import HeroCluster from '@/components/hero-cluster';
@@ -225,6 +226,7 @@ export default async function Home() {
           </div>
         </section>
       )}
+      <FundingSupport funding={site.funding} />
       <section className="join-section">
         <div className="container join-grid">
           <div>

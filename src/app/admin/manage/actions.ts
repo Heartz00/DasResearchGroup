@@ -126,6 +126,13 @@ export async function saveContent(
               m.source_url === photo.url ||
               m.media_details?.sizes?.large?.source_url === photo.url,
           )?.id || 0;
+      } else if (area === 'funding') {
+        const funder = data.site.funding.funders.find((p) => p.id === item);
+        if (!funder)
+          throw new Error('This funder has changed. Reload the list.');
+        metadata['Legacy Source'] = funder.sourceKey;
+        metadata['Funding Key'] = funder.sourceKey;
+        originalTitle = funder.name;
       } else if (area === 'updates') {
         const update = data.site.news.find((n) => n.id === item);
         if (!update)
@@ -141,6 +148,13 @@ export async function saveContent(
     if (area === 'people') metadata['Managed Profile'] = 'Yes';
     if (area === 'publications') metadata['Managed Publication'] = 'Yes';
     if (area === 'updates') metadata['Managed Update'] = 'Yes';
+    if (area === 'funding') {
+      metadata['Managed Funder'] = 'Yes';
+      const key = text(
+        sections(existing?.content?.raw || '')['funding key'] || '',
+      );
+      if (key) metadata['Funding Key'] = key;
+    }
     if (existing) {
       const stored = sections(existing.content?.raw || '');
       if (stored['legacy source'])

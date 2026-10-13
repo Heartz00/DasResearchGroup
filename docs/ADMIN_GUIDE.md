@@ -37,6 +37,12 @@ Research figures use the gallery viewer on `/research`. Continue adding images a
 
 Some old member biographies are inside image pixels. Those cannot be recovered as editable text automatically. Enter an approved transcription in Biography; do not guess names or qualifications. The admin labels unnamed entries as needing a name.
 
+## Manage funding support
+
+Open **Funding Support** in the Content sidebar. The original six funders and the NSF/DOE award numbers are prepopulated from the source funding graphic. Open an existing funder or choose **Add funder**. Edit its name, award number, program, description, website and display order; choose/upload an individual logo and save as Published. **Display on Website → No** hides a published entry while retaining its record. Drafts do not replace the public acknowledgments. Funding appears on the homepage and Research page, with a footer shortcut.
+
+The original grouped logo graphic remains visible until an existing funder is edited. After an edit it is replaced by the editable funder cards, avoiding outdated award numbers in the old image. Upload individual logos for the entries you update; other original funders remain in the list. Keep funder names and award details verified.
+
 ## Edit instruments
 
 **Instruments** includes existing WordPress instrument photographs. Open a photograph, enter its approved instrument name, manufacturer, model and capabilities, and save. The photograph is selected automatically where its media-library record is available. Unverified technical fields remain blank. Publishing replaces that photograph on the Instruments page with the completed instrument entry, without duplicating it or deleting its original source.

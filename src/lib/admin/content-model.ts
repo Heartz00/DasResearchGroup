@@ -221,6 +221,20 @@ export const contentModels = {
       field('Display Order', 'number'),
     ],
   },
+  funding: {
+    label: 'Funding Support',
+    singular: 'funder',
+    kind: 'pages',
+    parent: 'research',
+    fields: [
+      field('Award Number'),
+      field('Program'),
+      field('Description', 'long'),
+      field('Funder Website', 'url'),
+      select('Display on Website', ['Yes', 'No']),
+      field('Display Order', 'number'),
+    ],
+  },
   photos: {
     label: 'Gallery',
     singular: 'gallery photo',
@@ -359,6 +373,7 @@ export function hasPhoto(area: string) {
       'updates',
       'research',
       'facilities',
+      'funding',
       'photos',
       'homepage',
     ].includes(area)

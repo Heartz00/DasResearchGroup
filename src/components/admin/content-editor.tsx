@@ -59,7 +59,9 @@ export default function ContentEditor({
               ? 'PI information'
               : area === 'people'
                 ? 'Member information'
-                : 'Content information'}
+                : area === 'funding'
+                  ? 'Funder information'
+                  : 'Content information'}
           </h3>
           {!single && (
             <label>
@@ -69,7 +71,9 @@ export default function ContentEditor({
                   ? 'Publication title'
                   : area === 'updates'
                     ? 'Update title'
-                    : 'Name / title'}
+                    : area === 'funding'
+                      ? 'Funder name'
+                      : 'Name / title'}
               <input
                 name="title"
                 required
@@ -155,7 +159,9 @@ export default function ContentEditor({
                 ? 'Profile photo'
                 : area === 'publications'
                   ? 'Graphical abstract'
-                  : 'Photo'}
+                  : area === 'funding'
+                    ? 'Funder logo'
+                    : 'Photo'}
             </h3>
             {photos.find((p) => p.id === selected)?.url ? (
               <Image
