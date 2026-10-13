@@ -2,7 +2,7 @@
 
 Next.js / TypeScript frontend for the SMU Das Research Group. WordPress remains the content source and administrative interface; Vercel is the intended host.
 
-Live website: https://das-research-group.vercel.app. Admin: https://das-research-group.vercel.app/admin. The GitHub repository is connected to Vercel; pushes to `main` deploy automatically.
+Live website: https://dasgroup.vercel.app. Admin: https://dasgroup.vercel.app/admin. The GitHub repository is connected to Vercel; pushes to `main` deploy automatically.
 
 Implemented: responsive homepage, Research, Team/PI, searchable Publications bibliography, Group News, Instruments, Group Photos, Join, Contact and Teaching; live public content reads with five-minute revalidation; sanitized content, optimized images/failure states, metadata, sitemap/robots and administrator documentation.
 

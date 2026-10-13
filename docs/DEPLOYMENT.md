@@ -2,12 +2,12 @@
 
 The site is deployed to Vercel and connected to GitHub. Production uses Node.js 24, the Next.js preset and reproducible `npm ci` installs.
 
-- Website: https://das-research-group.vercel.app
-- Admin sign-in: https://das-research-group.vercel.app/admin
+- Website: https://dasgroup.vercel.app
+- Admin sign-in: https://dasgroup.vercel.app/admin
 - Repository: https://github.com/Heartz00/DasResearchGroup
 - Hosting project: https://vercel.com/ayomides-projects-3c7c3776/das-research-group
 
-Pushes to `main` trigger production deployments. Production environment settings are `WORDPRESS_URL=https://people.smu.edu/daslab`, `WORDPRESS_ENABLED=true`, `SITE_URL=https://das-research-group.vercel.app` and `ADMIN_ENABLED=true`. A fresh `ADMIN_SESSION_SECRET` is stored as a sensitive production variable in Vercel; it is not in GitHub. Editors sign in with their existing individual authorized content accounts.
+Pushes to `main` trigger production deployments. Production environment settings are `WORDPRESS_URL=https://people.smu.edu/daslab`, `WORDPRESS_ENABLED=true`, `SITE_URL=https://dasgroup.vercel.app` and `ADMIN_ENABLED=true`. A fresh `ADMIN_SESSION_SECRET` is stored as a sensitive production variable in Vercel; it is not in GitHub. Editors sign in with their existing individual authorized content accounts.
 
 Local `.env` files, Vercel authentication/link files, dependency caches and preview artifacts are excluded from Git and deployment uploads. The Linux clean-install check includes the required native/WASM dependency entries in the lockfile. The initial production deployment was completed on October 13, 2026.
 
