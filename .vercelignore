@@ -1,0 +1,12 @@
+.env*
+!.env.example
+.git/
+.next/
+.next-admin-test/
+.npm-cache/
+.preview/
+.test-build/
+.vercel-cli/
+node_modules/
+test-results/
+playwright-report/

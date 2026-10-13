@@ -1,0 +1,10 @@
+.next/
+.next-admin-test/
+node_modules/
+.npm-cache/
+.preview/
+.test-build/
+test-results/
+playwright-report/
+package-lock.json
+src/content/wordpress-snapshot.json

@@ -1,0 +1,16 @@
+node_modules/
+.next/
+.next-admin-test/
+out/
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+coverage/
+.preview/
+.npm-cache/
+test-results/
+playwright-report/
+.test-build/
+.vercel/
+.vercel-cli/

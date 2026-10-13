@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noEmit": false,
+    "outDir": ".test-build",
+    "incremental": false,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "rootDir": "."
+  },
+  "include": [
+    "tests/native-cms.test.ts",
+    "tests/admin.test.ts",
+    "tests/admin-access.test.ts",
+    "src/lib/admin/session.ts",
+    "src/lib/admin/records.ts",
+    "src/lib/admin/login-limit.ts",
+    "tests/adapters.test.ts",
+    "src/lib/wordpress/adapters.ts",
+    "src/lib/content/types.ts"
+  ],
+  "exclude": ["node_modules", ".next", ".test-build"]
+}

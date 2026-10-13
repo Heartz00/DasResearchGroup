@@ -1,0 +1,104 @@
+.hero-science.cluster-figure {
+  position: relative;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.cluster-viewport {
+  position: relative;
+  aspect-ratio: 1.13;
+  background: transparent;
+  overflow: visible;
+  touch-action: pan-y;
+}
+.cluster-viewport::before {
+  content: '';
+  position: absolute;
+  inset: 4% 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 201, 240, 0.065),
+    transparent 66%
+  );
+}
+.cluster-viewport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(143, 183, 205, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(143, 183, 205, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 12%, transparent 65%);
+}
+.cluster-viewport:focus-visible {
+  outline: none;
+}
+.cluster-viewport:focus-visible::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(76, 201, 240, 0.12),
+    transparent 66%
+  );
+}
+.cluster-poster,
+.cluster-canvas {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+.cluster-poster {
+  visibility: hidden;
+  display: grid;
+  align-items: center;
+  mask-image: radial-gradient(ellipse at center, black 28%, transparent 72%);
+}
+.cluster-failed .cluster-poster {
+  visibility: visible;
+}
+.cluster-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+}
+.cluster-poster .image-fallback {
+  background: transparent;
+}
+.cluster-ready .cluster-poster {
+  visibility: hidden;
+}
+.cluster-canvas {
+  opacity: 0;
+}
+.cluster-ready .cluster-canvas {
+  opacity: 1;
+}
+.cluster-canvas canvas {
+  display: block;
+  background: transparent;
+  touch-action: pan-y;
+}
+.cluster-ready {
+  cursor: grab;
+}
+.cluster-ready:active {
+  cursor: grabbing;
+}
+.cluster-static,
+.cluster-static svg {
+  display: block;
+  width: 100%;
+}
+@media (max-width: 760px) {
+  .cluster-viewport {
+    aspect-ratio: 1.25;
+  }
+  .cluster-ready,
+  .cluster-ready:active {
+    cursor: default;
+  }
+}
