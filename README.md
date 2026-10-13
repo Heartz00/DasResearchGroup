@@ -2,7 +2,9 @@
 
 Next.js / TypeScript frontend for the SMU Das Research Group. WordPress remains the content source and administrative interface; Vercel is the intended host.
 
-Implemented: responsive homepage, Research, People/PI, Publications with year filtering, News, Facilities, Gallery, Join, Contact and Teaching; live public WordPress reads with five-minute revalidation; sanitized content, optimized images/failure states, metadata, sitemap/robots and administrator documentation.
+Live website: https://das-research-group.vercel.app. Admin: https://das-research-group.vercel.app/admin. The GitHub repository is connected to Vercel; pushes to `main` deploy automatically.
+
+Implemented: responsive homepage, Research, Team/PI, searchable Publications bibliography, Group News, Instruments, Group Photos, Join, Contact and Teaching; live public content reads with five-minute revalidation; sanitized content, optimized images/failure states, metadata, sitemap/robots and administrator documentation.
 
 ## Run locally
 
@@ -25,7 +27,7 @@ Run `npm run typecheck`, `npm run lint`, `npm test`, `npm run test:browser`, `np
 - [Handover](docs/HANDOVER.md)
 - [Original Phase 1 audit](docs/DISCOVERY.md)
 
-Production WordPress has not been changed, and the frontend has not been deployed. Before launch, review scientific/editorial content, missing image descriptions and blocked external images, verify dashboard revisions, select the domain and confirm institutional ownership. The optional WordPress templates are supported but have not been created in production.
+The frontend is deployed on Vercel, while the existing SMU content backend remains in place. Continue reviewing scientific/editorial content, missing image descriptions and blocked external images. Custom-domain and institutional DNS changes are separate from this deployment. The optional backend templates remain available as advanced setup references.
 
 ## Content administration
 
