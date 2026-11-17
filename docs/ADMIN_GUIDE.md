@@ -39,7 +39,7 @@ Some old member biographies are inside image pixels. Those cannot be recovered a
 
 ## Manage funding support
 
-Open **Funding Support** in the Content sidebar. The original six funders and the NSF/DOE award numbers are prepopulated from the source funding graphic. Open an existing funder or choose **Add funder**. Edit its name, award number, program, description, website and display order; choose/upload an individual logo and save as Published. **Display on Website → No** hides a published entry while retaining its record. Drafts do not replace the public acknowledgments. Funding appears on the homepage and Research page, with a footer shortcut.
+Open **Funding Support** in the Content sidebar. The original six funders and the NSF/DOE award numbers are prepopulated from the source funding graphic. Open an existing funder or choose **Add funder**. Edit its name, award number, program, description, website and display order; choose/upload an individual logo and save as Published. **Display on Website → No** hides a published entry while retaining its record. Drafts do not replace the public acknowledgments. Funding appears on the homepage, with a footer shortcut.
 
 Each original funder has its own logo extracted from the original group funding graphic. Bundled logos remain visible when the old source image is removed or award details are edited. Uploading a logo replaces the original for that funder; new funders need their own uploaded logo. Keep funder names, award details and current funding status verified. See [funding asset provenance](FUNDING_ASSETS.md).
 
@@ -115,6 +115,6 @@ The native WordPress guide is retained as an advanced fallback in [NATIVE_WORDPR
 
 ## Research overview and scientific context
 
-Open **Research > Edit research overview** to edit the introduction and choose or upload the overview figure. The full overview is visible on the Research page, followed by source-backed themes, saved research areas, recent papers and funding support. The original overview is prepopulated when the source page contains the known website-migration notice. Saving an Overview takes precedence, including an intentionally empty field. Research-area Overview fields also appear in their public sections.
+Open **Research > Edit research overview** to edit the introduction and choose or upload the overview figure. The full overview is visible on the Research page, followed by source-backed themes and saved research areas. Publications and funding remain in their dedicated locations. The original overview is prepopulated when the source page contains the known website-migration notice. Saving an Overview takes precedence, including an intentionally empty field. Research-area Overview fields also appear in their public sections.
 
 The restored introduction is taken from the repository's original Research-page capture. Its original research composite comes from https://people.smu.edu/daslab/files/2022/05/res.jpg and is bundled as `public/research/original-research.webp` for reliable loading. Other live research descriptions are never replaced by this migration recovery.

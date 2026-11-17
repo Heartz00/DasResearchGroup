@@ -15,4 +15,4 @@ The organization marks were preserved, without redrawing or generation. Embedded
 | doe.webp     | U.S. Department of Energy                    | DE-SC0025724          |
 | welch.webp   | The Welch Foundation                         |                       |
 
-The homepage and Research page share the same funding component and admin records. Bundled logos prevent remote image outages from affecting these acknowledgments. Uploaded logos override the defaults; explicit photo hiding and funder visibility settings are respected. The original graphic verifies historical support; the website manager should review current award status.
+The homepage funding section uses the Funding Support admin records. Bundled logos prevent remote image outages from affecting these acknowledgments. Uploaded logos override the defaults; explicit photo hiding and funder visibility settings are respected. The original graphic verifies historical support; the website manager should review current award status.
