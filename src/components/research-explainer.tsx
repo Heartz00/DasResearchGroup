@@ -80,17 +80,14 @@ export default function ResearchExplainer({ focus }: { focus: Focus[] }) {
             <h3>{theme.title}</h3>
             <p>{researchSummary(theme)}</p>
             {details[theme.title] && (
-              <details className="research-theme-detail">
-                <summary>Question, approach & significance</summary>
-                <dl className="theme-details">
-                  <dt>Scientific question</dt>
-                  <dd>{details[theme.title].question}</dd>
-                  <dt>Approach</dt>
-                  <dd>{details[theme.title].approach}</dd>
-                  <dt>Why it matters</dt>
-                  <dd>{details[theme.title].importance}</dd>
-                </dl>
-              </details>
+              <dl className="theme-details research-theme-facts">
+                <dt>Scientific question</dt>
+                <dd>{details[theme.title].question}</dd>
+                <dt>Approach</dt>
+                <dd>{details[theme.title].approach}</dd>
+                <dt>Why it matters</dt>
+                <dd>{details[theme.title].importance}</dd>
+              </dl>
             )}
           </article>
         ))}

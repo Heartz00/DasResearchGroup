@@ -95,6 +95,11 @@ export default async function ManagePage({
     record?.featured_media ||
     Number(record?.content?.raw?.match(/wp-image-(\d+)/)?.[1]) ||
     0;
+  if (area === 'research' && query.item === 'overview') {
+    if (data.site.researchRecovered)
+      values.Overview = text(data.site.researchHtml);
+    if (!photo) photo = data.site.researchDefaultMediaId;
+  }
   if ((!record || record.status === 'publish') && area.endsWith('-header')) {
     const header = data.site.pageHeaders[area.replace('-header', '')];
     photo =

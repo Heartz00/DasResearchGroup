@@ -72,6 +72,8 @@ export async function saveContent(
         : 0) ||
       0;
     const metadata: Record<string, string> = {};
+    if (area === 'research' && item === 'overview' && !originalPhoto)
+      originalPhoto = data.site.researchDefaultMediaId;
     if (model.parent && !data.parent)
       throw new Error(
         'This section needs its initial setup. Ask the website manager; no changes were saved.',

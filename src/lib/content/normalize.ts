@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { pageHeaders } from './page-headers';
 import { fundingSupport } from './funding';
+import { researchPresentation } from './research-presentation';
 import {
   profileKey,
   publicationKey,
@@ -376,6 +377,7 @@ export function normalizeSite(source: SiteContent) {
       }),
   ].filter((p, i, all) => all.findIndex((other) => other.url === p.url) === i);
   const researchSections = sections(research?.html ?? '');
+  const researchContent = researchPresentation(research, source.media);
   const researchChildren = children(research).filter(
     (p) => !fieldBoolean(sections(p.html)['managed funder']),
   );
@@ -419,9 +421,8 @@ export function normalizeSite(source: SiteContent) {
   const piName = text(piSections.name ?? '') || 'Anindita (Dia) Das';
   // Until child pages are added, the source's first two paragraphs supply the introduction.
   const introParagraphs =
-    (research?.html ?? '').match(/<p\b[^>]*>[\s\S]*?<\/p>/gi)?.slice(0, 2) ??
-    [];
-  const researchText = text(research?.html ?? '');
+    researchContent.html.match(/<p\b[^>]*>[\s\S]*?<\/p>/gi)?.slice(0, 2) ?? [];
+  const researchText = text(researchContent.html);
   const focus = [
     {
       title: 'Coinage metal clusters',
@@ -452,7 +453,9 @@ export function normalizeSite(source: SiteContent) {
     featuredNews: publicNews.filter((n) => n.featured),
     focus,
     research,
-    researchHtml: publicHtml(researchSections.overview ?? research?.html ?? ''),
+    researchHtml: researchContent.html,
+    researchRecovered: researchContent.recovered,
+    researchDefaultMediaId: researchContent.defaultMediaId,
     researchIntro: cleanHtml(introParagraphs.join('')),
     areas: researchChildren.map((p) => ({
       ...p,
@@ -462,6 +465,7 @@ export function normalizeSite(source: SiteContent) {
       summary: text(sections(p.html).summary ?? p.html).slice(0, 250),
       featured: fieldBoolean(sections(p.html)['featured on homepage']),
       html: labeledContent(p.html, [
+        'Overview',
         'Scientific question',
         'Approach',
         'Full Description',
@@ -476,9 +480,7 @@ export function normalizeSite(source: SiteContent) {
       ),
     })),
     researchSections,
-    researchPhoto: fieldBoolean(researchSections['photo hidden'])
-      ? undefined
-      : mediaPhoto(source.media.find((m) => m.id === research?.featuredMedia)),
+    researchPhoto: researchContent.photo,
     heroPhoto: fieldBoolean(homeSections['photo hidden'])
       ? undefined
       : (mediaPhoto(source.media.find((m) => m.id === home?.featuredMedia)) ??

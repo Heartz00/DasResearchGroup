@@ -112,3 +112,9 @@ Show a new maintainer one PI edit, a member biography/photo change, a publicatio
 The native WordPress guide is retained as an advanced fallback in [NATIVE_WORDPRESS_GUIDE.md](NATIVE_WORDPRESS_GUIDE.md). Generic collection/source tools remain for compatibility but are not the normal workspace navigation.
 
 **Verification boundary:** local unit/browser checks use isolated test records. Real SMU authenticated editing, media upload and revision retention must be checked with an authorized account. This development work has not changed production content or accounts.
+
+## Research overview and scientific context
+
+Open **Research > Edit research overview** to edit the introduction and choose or upload the overview figure. The full overview is visible on the Research page, followed by source-backed themes, saved research areas, recent papers and funding support. The original overview is prepopulated when the source page contains the known website-migration notice. Saving an Overview takes precedence, including an intentionally empty field. Research-area Overview fields also appear in their public sections.
+
+The restored introduction is taken from the repository's original Research-page capture. Its original research composite comes from https://people.smu.edu/daslab/files/2022/05/res.jpg and is bundled as `public/research/original-research.webp` for reliable loading. Other live research descriptions are never replaced by this migration recovery.

@@ -5,7 +5,12 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getSite } from '@/lib/content';
 import { cleanHtml, text } from '@/lib/wordpress/adapters';
-import { Empty, RichText, ScientificImage } from '@/components/content';
+import {
+  Empty,
+  RichText,
+  ScientificImage,
+  PublicationCard,
+} from '@/components/content';
 import PublicationList from '@/components/publication-list';
 import ResearchExplainer from '@/components/research-explainer';
 import TeamDirectory from '@/components/team-directory';
@@ -165,27 +170,37 @@ export default async function ContentPage({
         {section === 'research' &&
           (site.research ? (
             <>
-              {!site.areas.length && <ResearchExplainer focus={site.focus} />}
-              {site.areas.length > 0 && (
-                <nav className="section-navigation" aria-label="Research areas">
-                  {site.areas.map((a) => (
-                    <a key={a.id} href={`#research-${a.id}`}>
-                      {text(a.title)}
-                    </a>
-                  ))}
-                </nav>
-              )}
-              <div className="research-page-grid">
+              <nav
+                className="section-navigation research-page-navigation"
+                aria-label="On this research page"
+              >
+                <a href="#research-overview">Overview</a>
+                {!site.areas.length && site.focus.length > 0 && (
+                  <a href="#research-at-a-glance">Research themes</a>
+                )}
+                {site.areas.map((a) => (
+                  <a key={a.id} href={`#research-${a.id}`}>
+                    {text(a.title)}
+                  </a>
+                ))}
+                {site.publications.length > 0 && (
+                  <a href="#research-papers">Research papers</a>
+                )}
+                {site.funding.funders.some((p) => p.active) && (
+                  <a href="#funding-support">Funding support</a>
+                )}
+              </nav>
+              <section
+                className={`research-page-grid${site.researchPhoto ? '' : ' research-page-grid--text'}`}
+                id="research-overview"
+                aria-labelledby="research-overview-title"
+              >
                 <div>
-                  <h2>Research overview</h2>
-                  <details className="research-background">
-                    <summary>Read the complete scientific overview</summary>
-                    <RichText html={site.researchHtml} />
-                  </details>
-                  <p className="collection-note">
-                    The complete overview provides scientific context. Related
-                    papers provide detailed methods and results.
-                  </p>
+                  <p className="eyebrow">Our scientific approach</p>
+                  <h2 id="research-overview-title">
+                    Precision at the atomic scale.
+                  </h2>
+                  <RichText html={site.researchHtml} />
                 </div>
                 <div>
                   {site.researchPhoto && (
@@ -212,7 +227,8 @@ export default async function ContentPage({
                     Explore related publications ↗
                   </Link>
                 </div>
-              </div>
+              </section>
+              {!site.areas.length && <ResearchExplainer focus={site.focus} />}
               {site.areas.map((a) => (
                 <section
                   className={`content-section research-area ${a.photo ? 'research-area--with-image' : ''}`}
@@ -240,6 +256,64 @@ export default async function ContentPage({
                   </Link>
                 </section>
               ))}
+              {site.publications.length > 0 && (
+                <section
+                  className="research-papers content-section"
+                  id="research-papers"
+                  aria-labelledby="research-papers-title"
+                >
+                  <div className="section-heading">
+                    <div>
+                      <p className="eyebrow">Research in print</p>
+                      <h2 id="research-papers-title">
+                        Explore the science in detail.
+                      </h2>
+                    </div>
+                    <Link className="text-link" href="/publications">
+                      All publications <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                  <p className="muted">
+                    Read the papers for experimental methods, scientific
+                    findings and the context behind the group’s research.
+                  </p>
+                  <div className="research-papers-list">
+                    {[...site.publications]
+                      .sort(
+                        (a, b) =>
+                          Number(a.prior) - Number(b.prior) ||
+                          (b.year || 0) - (a.year || 0),
+                      )
+                      .slice(0, 3)
+                      .map((p) => (
+                        <PublicationCard key={p.id} publication={p} compact />
+                      ))}
+                  </div>
+                </section>
+              )}
+              <aside
+                className="research-connect"
+                aria-labelledby="research-connect-title"
+              >
+                <div>
+                  <p className="eyebrow">Work with us</p>
+                  <h2 id="research-connect-title">
+                    Bring your questions to the lab.
+                  </h2>
+                  <p>
+                    Explore research opportunities or contact the group to
+                    discuss a scientific collaboration.
+                  </p>
+                </div>
+                <div className="research-connect-actions">
+                  <Link href="/join" className="button button-red">
+                    Join the group
+                  </Link>
+                  <Link href="/contact" className="text-link">
+                    Contact the lab <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </aside>
             </>
           ) : (
             <Empty source="https://people.smu.edu/daslab/" />

@@ -19,7 +19,7 @@ import {
 } from '../src/lib/wordpress/fields';
 import type { CmsPage, SiteContent } from '../src/lib/content/types';
 import snapshot from '../src/content/wordpress-snapshot.json';
-import { publicHtml } from '../src/lib/wordpress/adapters';
+import { publicHtml, text } from '../src/lib/wordpress/adapters';
 import {
   contentValues,
   updateContentFields,
@@ -169,6 +169,51 @@ test('funding preserves all original funders, replaces one saved entry and honor
     ),
   );
   assert.equal(normalizeSite(data).funding.funders.length, 7);
+});
+
+test('research restores the known migration notice while saved or cleared overviews win', () => {
+  const notice =
+    '<p>Visit our new website.</p><a href="https://dasgroup.vercel.app/">Visit the Das Research Group Website</a>';
+  const page = record(6, 'research', notice);
+  const data = source([page]);
+  const restored = normalizeSite(data);
+  assert.equal(restored.researchRecovered, true);
+  assert.match(restored.researchHtml, /synthetic inorganic chemistry/);
+  assert.equal(restored.focus.length, 3);
+  assert.equal(restored.researchPhoto?.url, '/research/original-research.webp');
+  assert.doesNotMatch(
+    restored.researchHtml,
+    /Current Funding Support|Visit the Das Research Group Website|website-grants/,
+  );
+
+  page.html = updateContentFields('research', notice, {
+    Overview: 'Updated approved research overview.',
+  });
+  assert.equal(normalizeSite(data).researchRecovered, false);
+  assert.match(
+    normalizeSite(data).researchHtml,
+    /Updated approved research overview/,
+  );
+  assert.doesNotMatch(
+    normalizeSite(data).researchHtml,
+    /synthetic inorganic chemistry/,
+  );
+
+  page.html = updateContentFields(
+    'research',
+    page.html,
+    { Overview: '' },
+    { 'Photo Hidden': 'Yes' },
+  );
+  assert.equal(text(normalizeSite(data).researchHtml), '');
+  assert.equal(normalizeSite(data).researchPhoto, undefined);
+  page.html = '<p>A different live research description.</p>';
+  assert.match(
+    normalizeSite(data).researchHtml,
+    /A different live research description/,
+  );
+  assert.equal(normalizeSite(data).researchRecovered, false);
+  assert.equal(normalizeSite(source([])).researchPhoto, undefined);
 });
 
 test('group-news fields and photo captions round-trip from admin to public content', () => {
