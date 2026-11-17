@@ -279,6 +279,7 @@ export default async function ManagePage({
           id: p.id,
           name: p.name,
           detail: p.award ? `Award ${p.award}` : 'Existing funding support',
+          image: p.photo?.url,
         })),
     );
   if (area === 'publications')

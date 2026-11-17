@@ -97,6 +97,13 @@ test('funding preserves all original funders, replaces one saved entry and honor
     'DE-SC0025724',
   );
   assert.ok(initial.funding.graphic);
+  assert.ok(
+    initial.funding.funders.every((p) => p.photo?.url.startsWith('/funding/')),
+  );
+  const withoutGraphic = source([
+    record(6, 'research', '<p>Research overview</p>'),
+  ]);
+  assert.equal(normalizeSite(withoutGraphic).funding.funders.length, 6);
   data.pages.push(
     record(
       902,
@@ -125,6 +132,28 @@ test('funding preserves all original funders, replaces one saved entry and honor
     'Approved award',
   );
   assert.equal(saved.funding.graphic, undefined);
+  assert.equal(
+    saved.funding.funders.find((p) => p.sourceKey === 'nsf')?.photo?.url,
+    '/funding/nsf.webp',
+  );
+  assert.ok(
+    saved.funding.funders.filter((p) => p.active).every((p) => p.photo),
+  );
+  data.pages[1].html = updateContentFields(
+    'funding',
+    data.pages[1].html,
+    {},
+    {
+      'Managed Funder': 'Yes',
+      'Funding Key': 'nsf',
+      'Photo Hidden': 'Yes',
+    },
+  );
+  assert.equal(
+    normalizeSite(data).funding.funders.find((p) => p.sourceKey === 'nsf')
+      ?.photo,
+    undefined,
+  );
   assert.equal(saved.areas.length, 0);
   data.pages.push(
     record(

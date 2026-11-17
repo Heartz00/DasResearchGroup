@@ -1,4 +1,4 @@
-import type { CmsPage, Media } from './types';
+import type { CmsPage, Media, Photo } from './types';
 import { mediaPhoto, photos, sections, text } from '../wordpress/adapters';
 import { fieldBoolean, fieldLink, fieldOrder } from '../wordpress/fields';
 
@@ -15,6 +15,19 @@ export const legacyFunders = [
   { key: 'welch', name: 'The Welch Foundation', award: '' },
 ];
 
+// Individual crops of the original lab funding graphic, bundled for reliability.
+function originalLogo(key: string): Photo | undefined {
+  const funder = legacyFunders.find((p) => p.key === key);
+  if (!funder) return undefined;
+  return {
+    url: `/funding/${key}.webp`,
+    alt: `${funder.name} logo`,
+    caption: '',
+    width: 480,
+    height: 240,
+  };
+}
+
 export function fundingSupport(
   research: CmsPage | undefined,
   pages: CmsPage[],
@@ -28,7 +41,7 @@ export function fundingSupport(
   const graphic = photos(research?.html || '', media).find((p) =>
     /\/website-grants(?:-\d+x\d+)?\.jpg(?:\?|$)/i.test(p.url),
   );
-  const seeds = graphic
+  const seeds = research
     ? legacyFunders.map((p, i) => ({
         id: `legacy-${i}`,
         name: p.name,
@@ -36,7 +49,7 @@ export function fundingSupport(
         program: '',
         description: '',
         link: undefined as string | undefined,
-        photo: undefined as ReturnType<typeof mediaPhoto>,
+        photo: originalLogo(p.key),
         active: true,
         order: i,
         sourceKey: p.key,
@@ -53,7 +66,10 @@ export function fundingSupport(
       link: fieldLink(s['funder website']),
       photo: fieldBoolean(s['photo hidden'])
         ? undefined
-        : mediaPhoto(media.find((m) => m.id === p.featuredMedia)),
+        : mediaPhoto(media.find((m) => m.id === p.featuredMedia)) ||
+          (!p.featuredMedia
+            ? originalLogo(text(s['funding key'] || ''))
+            : undefined),
       active: text(s['display on website'] || 'Yes') !== 'No',
       order: fieldOrder(s['display order']),
       sourceKey: text(s['funding key'] || ''),

@@ -41,7 +41,7 @@ Some old member biographies are inside image pixels. Those cannot be recovered a
 
 Open **Funding Support** in the Content sidebar. The original six funders and the NSF/DOE award numbers are prepopulated from the source funding graphic. Open an existing funder or choose **Add funder**. Edit its name, award number, program, description, website and display order; choose/upload an individual logo and save as Published. **Display on Website → No** hides a published entry while retaining its record. Drafts do not replace the public acknowledgments. Funding appears on the homepage and Research page, with a footer shortcut.
 
-The original grouped logo graphic remains visible until an existing funder is edited. After an edit it is replaced by the editable funder cards, avoiding outdated award numbers in the old image. Upload individual logos for the entries you update; other original funders remain in the list. Keep funder names and award details verified.
+Each original funder has its own logo extracted from the original group funding graphic. Bundled logos remain visible when the old source image is removed or award details are edited. Uploading a logo replaces the original for that funder; new funders need their own uploaded logo. Keep funder names, award details and current funding status verified. See [funding asset provenance](FUNDING_ASSETS.md).
 
 ## Edit instruments
 

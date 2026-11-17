@@ -16,20 +16,6 @@ export default function FundingSupport({
     >
       <p className="eyebrow">Research support</p>
       <h2 id="funding-title">Current Funding Support</h2>
-      {funding.graphic && (
-        <div className="funding-original">
-          <ScientificImage
-            photo={{
-              ...funding.graphic,
-              alt: 'Funding support: NSF, ACS Petroleum Research Fund, Research Corporation for Science Advancement, Alfred P. Sloan Foundation, U.S. Department of Energy, and The Welch Foundation.',
-            }}
-            sizes="(max-width: 760px) 90vw, 800px"
-          />
-          <p className="collection-note">
-            Funding acknowledgments from the group.
-          </p>
-        </div>
-      )}
       <ul className="funding-grid">
         {funders.map((p) => (
           <li key={p.id}>
